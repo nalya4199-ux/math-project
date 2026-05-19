@@ -9,17 +9,17 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0f172a; color: #94a3b8; padding: 20px; margin: 0; font-size: 14px; }
         .wrapper { max-width: 1200px; margin: 0 auto; }
         .header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
-        .logo-box { background: #065f46; color: white; padding: 6px 12px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+        .logo-box { background: #047857; color: white; padding: 6px 12px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
         .logo-sub { background: #0284c7; color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
         .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
         @media(min-width: 992px) { .grid { grid-template-columns: 380px 1fr; } }
         .card { background: #1e293b; border-radius: 8px; border: 1px solid #334155; padding: 20px; margin-bottom: 20px; }
         h3 { margin-top: 0; color: #f8fafc; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 15px; }
         select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; border-radius: 6px; color: white; font-size: 13px; margin-bottom: 15px; }
-        .coef-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .coef-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .coef-box { background: #0f172a; border: 1px solid #334155; padding: 10px; border-radius: 6px; text-align: center; }
         .coef-title { font-size: 10px; color: #64748b; font-weight: bold; }
-        .coef-val { font-size: 16px; font-weight: bold; color: #f1f5f9; margin-top: 4px; }
+        .coef-val { font-size: 15px; font-weight: bold; color: #f1f5f9; margin-top: 4px; }
         .slider-container { background: #0f172a; padding: 15px; border-radius: 6px; border: 1px solid #334155; }
         input[type=range] { width: 100%; accent-color: #10b981; }
         .chart-container { position: relative; height: 420px; width: 100%; background: #1e293b; border-radius: 8px; border: 1px solid #334155; padding: 15px; box-sizing: border-box; }
@@ -31,40 +31,39 @@
 <body>
     <div class="wrapper">
         <div class="header">
-            <div class="logo-box">📊 MyBio-Derivatives <span class="logo-sub">OPF Beef Tech</span></div>
+            <div class="logo-box">🐄 MyBio-Derivatives <span class="logo-sub">Cattle Tech</span></div>
             <div style="font-size: 12px; color: #64748b; margin-left: auto;">Universiti Malaysia Kelantan (UMK) Academic Resource</div>
         </div>
         
-        <div style="font-size: 11px; color: #64748b; text-transform: uppercase; margin-bottom: 15px; font-weight: bold;">Modeling Instantaneous Cattle Weight Gain in Malaysian Husbandry</div>
+        <div style="font-size: 11px; color: #64748b; text-transform: uppercase; margin-bottom: 15px; font-weight: bold;">Bioscience Scenario: Optimizing Beef Cattle Management</div>
 
         <div class="grid">
             <div>
                 <div class="card">
-                    <h3>Choose Production Environment</h3>
-                    <select id="envSelect" onchange="initModel()">
-                        <option value="kk">1. Standard Oil Palm Frond (Kedah-Kelantan Cross)</option>
-                        <option value="brahman">2. Intensive Grain Feeding (Brahman Crossbreed)</option>
+                    <h3>CHOOSE PRODUCTION ENVIRONMENT</h3>
+                    <select id="envSelect" onchange="updateModel()">
+                        <option value="kk">1. Standard Feed (Kedah-Kelantan Crossbreed)</option>
+                        <option value="brahman">2. Intensive Feed (Brahman Crossbreed)</option>
                     </select>
 
-                    <h3>Model Coefficients (Malaysian Research Data)</h3>
+                    <h3>MODEL FUNCTIONS (CALCULUS DATA)</h3>
                     <div class="coef-grid">
-                        <div class="coef-box"><div class="coef-title">Asymptote (A)</div><div id="valA" class="coef-val">350kg</div></div>
-                        <div class="coef-box"><div class="coef-title">B (Offset)</div><div id="valB" class="coef-val">4.2</div></div>
-                        <div class="coef-box"><div class="coef-title">k (Growth)</div><div id="valK" class="coef-val">0.120</div></div>
+                        <div class="coef-box"><div class="coef-title">Weight Function f(x)</div><div id="funcText" class="coef-val" style="font-size:12px; color:#10b981;">f(x) = -0.15x² + 9.5x + 45</div></div>
+                        <div class="coef-box"><div class="coef-title">Derivative f'(x)</div><div id="derivText" class="coef-val" style="font-size:12px; color:#ea580c;">f'(x) = -0.3x + 9.5</div></div>
                     </div>
 
                     <div class="slider-container">
                         <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px;">
                             <span style="font-weight: bold; color: #f8fafc;">FINE-TUNE GROWTH CONSTANT (K)</span>
-                            <span id="sliderVal" style="color: #10b981; font-weight: bold;">0.120</span>
+                            <span id="sliderVal" style="color: #10b981; font-weight: bold;">1.00</span>
                         </div>
-                        <input type="range" id="kSlider" min="0.05" max="0.25" step="0.005" value="0.120" oninput="liveUpdateK()">
+                        <input type="range" id="kSlider" min="0.5" max="1.5" step="0.05" value="1.00" oninput="updateModel()">
                     </div>
-                    <p style="font-size: 11px; color: #64748b; margin-top: 8px; font-style: italic;">*Adjusting the growth-constant (k) simulates regional climate conditions or metabolic adaptations.</p>
+                    <p style="font-size: 11px; color: #64748b; margin-top: 8px; font-style: italic;">*In Malaysian intensive beef cattle farming, finding the derivative f'(x) of the weight function helps farmers pinpoint exactly when the growth rate peaks.</p>
                 </div>
 
                 <div class="inflection-box">
-                    <h3 style="color: #10b981; margin-bottom: 5px;">📈 Inflection Point (Max Derivative Value)</h3>
+                    <h3 style="color: #10b981; margin-bottom: 5px;">📈 Inflection Point Analysis</h3>
                     <p style="font-size: 12px; margin: 0; color: #cbd5e1;" id="inflectionText">Calculating biological peak...</p>
                 </div>
             </div>
@@ -76,7 +75,7 @@
                 
                 <div class="tip-box">
                     <span>💡</span>
-                    <span>Hover or click on the graph lines at any specific day to extract calculated values and veterinary tips corresponding to that precise point on the derivative trajectory.</span>
+                    <span>Hover or click on the graph lines at any specific week to extract calculated values and veterinary tips corresponding to that precise point on the derivative trajectory.</span>
                 </div>
 
                 <div id="hud" class="hud-box" style="display: none;">
@@ -89,56 +88,45 @@
 
     <script>
         let chart;
-        const weeks = Array.from({length: 46}, (_, i) => i); // 0 to 45 weeks
+        const weeks = Array.from({length: 33}, (_, i) => i); // Weeks 0 to 32
 
-        function getGompertz(A, B, k, t) {
-            // W(t) = A * exp(-B * exp(-k * t))
-            let W = A * Math.exp(-B * Math.exp(-k * t));
-            // Derivative W'(t) = A * B * k * exp(-k * t) * exp(-B * exp(-k * t))
-            let dW = A * B * k * Math.exp(-k * t) * Math.exp(-B * Math.exp(-k * t));
-            return { W: W, dW: dW };
-        }
-
-        function initModel() {
-            const env = document.getElementById('envSelect').value;
+        function calculateData(env, k, x) {
+            // Apply multiplier k to simulate fine-tuning
             if (env === 'kk') {
-                document.getElementById('valA').innerText = "350 kg";
-                document.getElementById('valB').innerText = "4.2";
-                document.getElementById('kSlider').value = 0.120;
+                let base_y = -0.15 * Math.pow(x, 2) + 9.5 * x + 45;
+                let base_dy = -0.3 * x + 9.5;
+                return { y: (base_y * k).toFixed(2), dy: (base_dy * k).toFixed(2) };
             } else {
-                document.getElementById('valA').innerText = "550 kg";
-                document.getElementById('valB').innerText = "4.5";
-                document.getElementById('kSlider').value = 0.140;
+                let base_y = -0.18 * Math.pow(x, 2) + 12.5 * x + 50;
+                let base_dy = -0.36 * x + 12.5;
+                return { y: (base_y * k).toFixed(2), dy: (base_dy * k).toFixed(2) };
             }
-            liveUpdateK();
         }
 
-        function liveUpdateK() {
+        function updateModel() {
             const env = document.getElementById('envSelect').value;
             const k = parseFloat(document.getElementById('kSlider').value);
-            document.getElementById('sliderVal').innerText = k.toFixed(3);
-            document.getElementById('valK').innerText = k.toFixed(3);
+            document.getElementById('sliderVal').innerText = k.toFixed(2);
 
-            let A = env === 'kk' ? 350 : 550;
-            let B = env === 'kk' ? 4.2 : 4.5;
+            if (env === 'kk') {
+                document.getElementById('funcText').innerText = "f(x) = -0.15x² + 9.5x + 45";
+                document.getElementById('derivText').innerText = "f'(x) = -0.3x + 9.5";
+                
+                let peakWeek = (9.5 / 0.3).toFixed(1);
+                document.getElementById('inflectionText').innerHTML = `For Kedah-Kelantan cattle, the growth velocity derivative peaks at the start and begins to decelerate until it approaches <b>Week 31.7</b>. Adjusting factor (K) to <b>${k}</b> scales the efficiency.`;
+            } else {
+                document.getElementById('funcText').innerText = "f(x) = -0.18x² + 12.5x + 50";
+                document.getElementById('derivText').innerText = "f'(x) = -0.36x + 12.5";
+                
+                let peakWeek = (12.5 / 0.36).toFixed(1);
+                document.getElementById('inflectionText').innerHTML = `For Brahman crossbreeds, intensive feeding pushes higher mass accumulation with deceleration completing around <b>Week 34.7</b>. Current modifier: <b>${k}</b>.`;
+            }
 
-            // Calculate Inflection Point: t = ln(B) / k
-            let tInflection = Math.log(B) / k;
-            let wInflection = A / Math. someValue === 'kk' ? Math.E : Math.E; // A * exp(-1) = A/e
-            let maxGrowth = A * k * Math.exp(-1);
-            document.getElementById('inflectionText').innerHTML = `The biological peak represents the absolute highest rate of muscle protein deposition. Beyond <b>Week ${tInflection.toFixed(1)}</b>, growth velocity decreases. Max Rate: <b>${maxGrowth.toFixed(2)} kg/week</b>.`;
+            const weightData = weeks.map(x => calculateData(env, k, x).y);
+            const rateData = weeks.map(x => calculateData(env, k, x).dy);
 
-            // Generate Data
-            const wData = [];
-            const dWData = [];
-            weeks.forEach(t => {
-                let res = getGompertz(A, B, k, t);
-                wData.push(res.W.toFixed(1));
-                dWData.push(res.dW.toFixed(2));
-            });
-
-            chart.data.datasets[0].data = wData;
-            chart.data.datasets[1].data = dWData;
+            chart.data.datasets[0].data = weightData;
+            chart.data.datasets[1].data = rateData;
             chart.update();
             document.getElementById('hud').style.display = 'none';
         }
@@ -149,16 +137,16 @@
             data: {
                 labels: weeks.map(w => `W${w}`),
                 datasets: [
-                    { label: 'W(t) - Cumulative Weight (kg)', data: [], borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.05)', borderWidth: 3, yAxisID: 'yLeft', tension: 0.2, fill: true },
-                    { label: "W'(t) - Weekly Growth Rate (kg/wk)", data: [], borderColor: '#ea580c', borderDash: [4, 4], borderWidth: 2, yAxisID: 'yRight', tension: 0.2 }
+                    { label: 'f(x) - Cumulative Weight (kg)', data: [], borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.05)', borderWidth: 3, yAxisID: 'yLeft', tension: 0.1, fill: true },
+                    { label: "f'(x) - Instantaneous Growth Rate (kg/wk)", data: [], borderColor: '#ea580c', borderDash: [4, 4], borderWidth: 2, yAxisID: 'yRight', tension: 0.1 }
                 ]
             },
             options: {
                 responsive: true, maintainAspectRatio: false,
                 scales: {
-                    x: { grid: { color: '#334155' }, ticks: { color: '#64748b' }, title: { display: true, text: 'Age of Cattle (Weeks)', color: '#64748b' } },
-                    yLeft: { type: 'linear', position: 'left', grid: { color: '#334155' }, ticks: { color: '#10b981' }, title: { display: true, text: 'Cumulative Weight (kg)', color: '#10b981' } },
-                    yRight: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#ea580c' }, title: { display: true, text: 'Weekly Weight Gain (kg/wk)', color: '#ea580c' } }
+                    x: { grid: { color: '#334155' }, ticks: { color: '#64748b' }, title: { display: true, text: 'Time Period (Weeks Post-Weaning)', color: '#64748b' } },
+                    yLeft: { type: 'linear', position: 'left', grid: { color: '#334155' }, ticks: { color: '#10b981' }, title: { display: true, text: 'Total Weight (kg)', color: '#10b981' } },
+                    yRight: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#ea580c' }, title: { display: true, text: 'Daily Weight Gain (kg/day)', color: '#ea580c' } }
                 },
                 plugins: { legend: { labels: { color: '#f8fafc', boxWidth: 12 } } },
                 onClick: (e, elements) => {
@@ -166,19 +154,17 @@
                         const idx = elements[0].index;
                         const env = document.getElementById('envSelect').value;
                         const k = parseFloat(document.getElementById('kSlider').value);
-                        let A = env === 'kk' ? 350 : 550;
-                        let B = env === 'kk' ? 4.2 : 4.5;
-                        let res = getGompertz(A, B, k, idx);
+                        let res = calculateData(env, k, idx);
                         
                         document.getElementById('hud').style.display = 'flex';
                         document.getElementById('hudX').innerText = idx;
-                        document.getElementById('hudCalculations').innerHTML = `CALCULATION: W(${idx}) = ${res.W.toFixed(1)} kg | W'(${idx}) = ${res.dW.toFixed(2)} kg/week`;
+                        document.getElementById('hudCalculations').innerHTML = `CALCULATION: f(${idx}) = ${res.y} kg | f'(${idx}) = ${res.dy} kg/week`;
                     }
                 }
             }
         });
 
-        initModel();
+        updateModel();
     </script>
 </body>
 </html>
